@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_1.xsd"
+         version="6.1"
+         metadata-complete="true">
+
+    <display-name>CyberShield</display-name>
+
+    <!-- ============================= FILTERS ============================= -->
+
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>com.cybershield.filter.EncodingFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>CsrfFilter</filter-name>
+        <filter-class>com.cybershield.filter.CsrfFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CsrfFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.cybershield.filter.AuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/dashboard</url-pattern>
+        <url-pattern>/report-incident</url-pattern>
+        <url-pattern>/incident-history</url-pattern>
+        <url-pattern>/update-incident-status</url-pattern>
+        <url-pattern>/profile</url-pattern>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>com.cybershield.filter.AdminFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+
+
+    <!-- =========================== AUTH SERVLETS ======================== -->
+
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.RegisterServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.LoginServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.LogoutServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- =========================== USER SERVLETS ======================== -->
+
+    <servlet>
+        <servlet-name>DashboardServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.DashboardServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DashboardServlet</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>IncidentServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.IncidentServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>IncidentServlet</servlet-name>
+        <url-pattern>/report-incident</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>IncidentHistoryServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.IncidentHistoryServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>IncidentHistoryServlet</servlet-name>
+        <url-pattern>/incident-history</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateIncidentStatusServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.UpdateIncidentStatusServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UpdateIncidentStatusServlet</servlet-name>
+        <url-pattern>/update-incident-status</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.ProfileServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- =========================== ADMIN SERVLETS ======================= -->
+
+    <servlet>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.admin.AdminDashboardServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <url-pattern>/admin/dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminIncidentsServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.admin.AdminIncidentsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminIncidentsServlet</servlet-name>
+        <url-pattern>/admin/incidents</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminIncidentDetailServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.admin.AdminIncidentDetailServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminIncidentDetailServlet</servlet-name>
+        <url-pattern>/admin/incident</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminUpdateIncidentServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.admin.AdminUpdateIncidentServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminUpdateIncidentServlet</servlet-name>
+        <url-pattern>/admin/incident/update</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminUsersServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.admin.AdminUsersServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminUsersServlet</servlet-name>
+        <url-pattern>/admin/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminAnalyticsServlet</servlet-name>
+        <servlet-class>com.cybershield.servlet.admin.AdminAnalyticsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminAnalyticsServlet</servlet-name>
+        <url-pattern>/admin/analytics</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- ============================ SESSION ============================= -->
+
+    <session-config>
+        <session-timeout>20</session-timeout>
+
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
+
+    <!-- =========================== WELCOME PAGE ========================= -->
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+
+    <!-- ============================ ERROR PAGES ========================== -->
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error.jsp</location>
+    </error-page>
+
+</web-app>

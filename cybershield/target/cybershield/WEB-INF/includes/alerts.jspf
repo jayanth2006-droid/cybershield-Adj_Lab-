@@ -1,0 +1,61 @@
+<%
+    String alertSuccess = request.getParameter("success");
+    String alertUpdated = request.getParameter("updated");
+    String alertSaved = request.getParameter("saved");
+    String alertRegistered = request.getParameter("registered");
+    String alertLoggedOut = request.getParameter("logout");
+    String alertTimeout = request.getParameter("timeout");
+    String alertError = request.getParameter("error");
+
+    String alertMessage = null;
+    String alertKind = null;
+
+    if ("1".equals(alertRegistered)) {
+        alertKind = "success";
+        alertMessage = "Account created successfully. Sign in to open your workspace.";
+    } else if ("1".equals(alertLoggedOut)) {
+        alertKind = "info";
+        alertMessage = "You have been signed out of the SOC console.";
+    } else if ("1".equals(alertTimeout)) {
+        alertKind = "warning";
+        alertMessage = "Your session expired. Please sign in again to continue.";
+    } else if ("1".equals(alertUpdated)) {
+        alertKind = "success";
+        alertMessage = "Incident updated successfully.";
+    } else if ("1".equals(alertSaved)) {
+        alertKind = "success";
+        alertMessage = "Profile changes saved.";
+    } else if ("1".equals(alertSuccess)) {
+        alertKind = "success";
+        alertMessage = "Action completed successfully.";
+    } else if (alertError != null) {
+        alertKind = "error";
+        if ("required".equals(alertError)) {
+            alertMessage = "Please complete every required field.";
+        } else if ("validation".equals(alertError)) {
+            alertMessage = "Some details are invalid. Check the highlighted fields and try again.";
+        } else if ("duplicate".equals(alertError)) {
+            alertMessage = "That email address or username is already in use.";
+        } else if ("status".equals(alertError)) {
+            alertMessage = "Select a valid incident status.";
+        } else if ("notes".equals(alertError)) {
+            alertMessage = "Investigation notes must be 5,000 characters or fewer.";
+        } else if ("server".equals(alertError)) {
+            alertMessage = "A server error occurred. Please try again in a moment.";
+        } else {
+            alertMessage = "The request could not be completed.";
+        }
+    }
+%>
+<% if (alertMessage != null) { %>
+<div class="alert alert-<%= alertKind %>" data-autohide role="alert">
+    <% if ("success".equals(alertKind)) { %>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+    <% } else if ("warning".equals(alertKind) || "info".equals(alertKind)) { %>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg>
+    <% } else { %>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg>
+    <% } %>
+    <span><%= com.cybershield.util.HtmlUtil.escape(alertMessage) %></span>
+</div>
+<% } %>

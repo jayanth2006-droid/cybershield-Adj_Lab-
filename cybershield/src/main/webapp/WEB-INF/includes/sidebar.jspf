@@ -1,0 +1,114 @@
+<%
+    String navCtx = request.getContextPath();
+    String navUri = request.getRequestURI();
+    Object navNameObj = session.getAttribute("fullName");
+    Object navRoleObj = session.getAttribute("role");
+    String navName = navNameObj == null ? "Analyst" : navNameObj.toString();
+    String navRole = navRoleObj == null ? "USER" : navRoleObj.toString();
+    boolean navAdminUser = "ADMIN".equalsIgnoreCase(navRole);
+
+    String navInitials = "CS";
+    String[] navParts = navName.trim().split("\\s+");
+    if (navParts.length > 0 && !navParts[0].isEmpty()) {
+        navInitials = navParts[0].substring(0, 1).toUpperCase();
+        if (navParts.length > 1 && !navParts[navParts.length - 1].isEmpty()) {
+            navInitials += navParts[navParts.length - 1].substring(0, 1).toUpperCase();
+        }
+    }
+%>
+<aside class="sidebar" id="appSidebar">
+    <a class="brand" href="<%= navCtx %>/dashboard">
+        <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 3l7 3v5c0 4.5-2.9 8.3-7 10-4.1-1.7-7-5.5-7-10V6l7-3z"/>
+                <path d="M9 12l2 2 4-4"/>
+            </svg>
+        </span>
+        <span class="brand-text">
+            <strong>CyberShield</strong>
+            <span>SOC Console</span>
+        </span>
+    </a>
+
+    <nav class="nav" aria-label="Main navigation">
+        <div class="nav-section">Workspace</div>
+        <a class="nav-link <%= navUri.endsWith("/dashboard") ? "active" : "" %>"
+           href="<%= navCtx %>/dashboard">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7" rx="1.6"/>
+                <rect x="14" y="3" width="7" height="7" rx="1.6"/>
+                <rect x="3" y="14" width="7" height="7" rx="1.6"/>
+                <rect x="14" y="14" width="7" height="7" rx="1.6"/>
+            </svg>
+            Dashboard
+        </a>
+        <a class="nav-link <%= navUri.endsWith("/report-incident") || navUri.endsWith("/report-incident.jsp") ? "active" : "" %>"
+           href="<%= navCtx %>/report-incident">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 8v8M8 12h8"/>
+            </svg>
+            Report Incident
+        </a>
+        <a class="nav-link <%= navUri.endsWith("/incident-history") ? "active" : "" %>"
+           href="<%= navCtx %>/incident-history">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 2"/>
+            </svg>
+            My Incidents
+        </a>
+        <a class="nav-link <%= navUri.endsWith("/profile") ? "active" : "" %>"
+           href="<%= navCtx %>/profile">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="8" r="3.4"/>
+                <path d="M5 20c.7-3.4 3.5-5.4 7-5.4s6.3 2 7 5.4"/>
+            </svg>
+            Profile
+        </a>
+
+        <% if (navAdminUser) { %>
+        <div class="nav-section">Administration</div>
+        <a class="nav-link <%= navUri.endsWith("/admin/dashboard") ? "active" : "" %>"
+           href="<%= navCtx %>/admin/dashboard">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3l7 3v5c0 4.5-2.9 8.3-7 10-4.1-1.7-7-5.5-7-10V6l7-3z"/>
+                <path d="M9 12l2 2 4-4"/>
+            </svg>
+            SOC Overview
+        </a>
+        <a class="nav-link <%= navUri.contains("/admin/incidents") || navUri.contains("/admin/incident") ? "active" : "" %>"
+           href="<%= navCtx %>/admin/incidents">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3l9 5-9 5-9-5 9-5z"/>
+                <path d="M3 12l9 5 9-5"/>
+                <path d="M3 16l9 5 9-5"/>
+            </svg>
+            All Incidents
+        </a>
+        <a class="nav-link <%= navUri.endsWith("/admin/users") ? "active" : "" %>"
+           href="<%= navCtx %>/admin/users">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="9" cy="8" r="3"/>
+                <path d="M3.5 19c.6-2.8 2.8-4.4 5.5-4.4s4.9 1.6 5.5 4.4"/>
+                <path d="M16 5.5a3 3 0 010 5.4M17.5 14.8c2 .5 3.4 1.9 3.9 4.2"/>
+            </svg>
+            Users
+        </a>
+        <a class="nav-link <%= navUri.endsWith("/admin/analytics") ? "active" : "" %>"
+           href="<%= navCtx %>/admin/analytics">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>
+            </svg>
+            Analytics
+        </a>
+        <% } %>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="sf-label">System status</div>
+        <div class="sf-value">All systems operational</div>
+        <div class="sf-status"><span class="live-dot"></span> Live monitoring</div>
+    </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>

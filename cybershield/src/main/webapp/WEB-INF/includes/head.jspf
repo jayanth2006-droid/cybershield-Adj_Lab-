@@ -1,0 +1,15 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="CyberShield security operations center for incident reporting and response.">
+<title><%= pageTitle %> · CyberShield</title>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/cybershield.css">
+<script>
+    (function () {
+        try {
+            var saved = localStorage.getItem("cs-theme");
+            if (saved === "light") {
+                document.documentElement.setAttribute("data-theme", "light");
+            }
+        } catch (e) { }
+    })();
+</script>
